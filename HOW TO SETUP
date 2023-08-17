@@ -1,0 +1,17 @@
+REQUIREMENTS
+1. OAK-D CAMERA
+2. UBUNTU OPERATING SYSTEM
+
+INSTRUCTIONS
+1. MAKE run.sh executable:
+sudo chmod +x run.sh
+
+2. RUN THE run.sh:
+sudo ./run.sh
+
+3. TO CHECK IF THE SETUP IS SUCCESSFUL YOU CAN VIEW THE DEMO OF THE CAMERA:
+sudo chmod +x demo.sh
+sudo ./demo.sh
+
+NOTE: IF THERE IS A PROBLEM IN SETTING UP THE PROJECT PLEASE CONTACT THE RESEARCHER:
+jazpenofficial@gmail.com
