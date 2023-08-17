@@ -8,6 +8,9 @@ cd sacabot_ws
 sudo apt update
 sudo apt install git
 
+# Install Python
+sudo apt install python3
+
 # Clone the depthai_blazepose repository
 git clone https://github.com/geaxgx/depthai_blazepose.git
 
@@ -18,8 +21,8 @@ git clone https://github.com/mjazpen/sacabot.git
 cd sacabot
 
 # Make setup.sh executable and run it
-chmod +x setup.sh
-./setup.sh
+sudo chmod +x setup.sh
+sudo ./setup.sh
 
 # Navigate back to the main directory
 cd ..
@@ -29,4 +32,3 @@ cd depthai_blazepose
 
 # Install the required Python packages
 python3 -m pip install -r requirements.txt
-
