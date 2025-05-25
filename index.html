@@ -3,7 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jazpen Madriaga - Junior Software Engineer</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>My Name - Junior Software Engineer | Full-Stack Developer Portfolio</title>
+    <meta name="title" content="My Name - Junior Software Engineer | Full-Stack Developer Portfolio">
+    <meta name="description" content="Experienced Junior Software Engineer with 2+ years in web development. Skilled in JavaScript, Vue.js, React, Python, AWS, and mobile development. View my portfolio and projects.">
+    <meta name="keywords" content="software engineer, web developer, javascript, vue.js, react, python, aws, flutter, full-stack developer, portfolio">
+    <meta name="author" content="My Name">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mjazpen.github.io/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mjazpen.github.io/">
+    <meta property="og:title" content="My Name - Junior Software Engineer Portfolio">
+    <meta property="og:description" content="Experienced Junior Software Engineer with 2+ years in web development. Skilled in JavaScript, Vue.js, React, Python, AWS, and mobile development.">
+    <meta property="og:image" content="https://mjazpen.github.io/og-image.jpg">
+    <meta property="og:site_name" content="My Name Portfolio">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mjazpen.github.io/">
+    <meta property="twitter:title" content="My Name - Junior Software Engineer Portfolio">
+    <meta property="twitter:description" content="Experienced Junior Software Engineer with 2+ years in web development. Skilled in JavaScript, Vue.js, React, Python, AWS, and mobile development.">
+    <meta property="twitter:image" content="https://mjazpen.github.io/og-image.jpg">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#7c3aed">
+    <meta name="msapplication-TileColor" content="#7c3aed">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="General">
+    
+    <!-- Structured Data - JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Person",
+      "name": "My Name",
+      "jobTitle": "Junior Software Engineer",
+      "url": "https://mjazpen.github.io/",
+      "sameAs": [
+        "https://linkedin.com/in/mjazpen",
+        "https://github.com/mjazpen"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "EasyPOS Solutions Inc"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "President Ramon Magsaysay State University"
+      },
+      "knowsAbout": [
+        "JavaScript",
+        "TypeScript", 
+        "Vue.js",
+        "React",
+        "Node.js",
+        "Python",
+        "Django",
+        "Flask",
+        "PHP",
+        "Laravel",
+        "Flutter",
+        "MySQL",
+        "DynamoDB",
+        "Redis",
+        "AWS",
+        "Web Development",
+        "Software Engineering"
+      ],
+      "description": "Experienced Junior Software Engineer with 2+ years in web development. Skilled in JavaScript, Vue.js, React, Python, AWS, and mobile development."
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,7 +133,7 @@
 <body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800 min-h-screen">
     <div id="app">
         <!-- Navigation -->
-        <nav class="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+        <nav class="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-50" role="navigation" aria-label="Main navigation">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center">
@@ -68,6 +148,7 @@
                                 @click="activeTab = tab.key"
                                 :class="activeTab === tab.key ? 'bg-purple-600/50 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white'"
                                 class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2"
+                                :aria-label="`Navigate to ${tab.name} section`"
                             >
                                 <i :class="tab.icon"></i>
                                 <span>{{ tab.name }}</span>
@@ -76,7 +157,10 @@
                     </div>
                     <!-- Mobile menu button -->
                     <div class="md:hidden">
-                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                                class="text-white"
+                                aria-label="Toggle mobile menu"
+                                :aria-expanded="mobileMenuOpen">
                             <i class="fas fa-bars"></i>
                         </button>
                     </div>
@@ -90,6 +174,7 @@
                             @click="activeTab = tab.key; mobileMenuOpen = false"
                             :class="activeTab === tab.key ? 'bg-purple-600/50 text-white' : 'text-gray-300'"
                             class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-left"
+                            :aria-label="`Navigate to ${tab.name} section`"
                         >
                             <i :class="tab.icon"></i>
                             <span>{{ tab.name }}</span>
@@ -115,6 +200,10 @@
                         <h2 class="text-2xl md:text-3xl text-purple-300 mb-6 animate-slide-up">
                             {{ profile.title }}
                         </h2>
+                        <!-- SEO-friendly subtitle -->
+                        <p class="text-lg text-gray-300 mb-4 max-w-3xl mx-auto">
+                            Full-Stack Developer specializing in JavaScript, Vue.js, React, Python, and AWS Cloud Solutions
+                        </p>
                     </div>
                     
                     <!-- Objective -->
@@ -321,22 +410,36 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="bg-white/5 border-t border-white/10 mt-20">
+                <!-- Footer -->
+        <footer class="bg-white/5 border-t border-white/10 mt-20" role="contentinfo">
             <div class="max-w-7xl mx-auto py-8 px-4 text-center">
                 <p class="text-gray-300 mb-4">
                     © 2024 {{ profile.name }}. Built with Vue 3 & Tailwind CSS
                 </p>
                 <div class="flex justify-center space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                    <a href="https://linkedin.com/in/mjazpen" 
+                       class="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+                       aria-label="LinkedIn Profile"
+                       target="_blank"
+                       rel="noopener noreferrer">
                         <i class="fab fa-linkedin text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                    <a href="https://github.com/mjazpen" 
+                       class="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+                       aria-label="GitHub Profile"
+                       target="_blank"
+                       rel="noopener noreferrer">
                         <i class="fab fa-github text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                    <a href="mailto:contact@mjazpen.dev" 
+                       class="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+                       aria-label="Email Contact">
                         <i class="fas fa-envelope text-xl"></i>
                     </a>
+                </div>
+                <!-- Additional SEO Footer Links -->
+                <div class="mt-4 text-sm text-gray-400">
+                    <p>Software Engineer Portfolio | Web Developer | Full-Stack Development Services</p>
                 </div>
             </div>
         </footer>
@@ -358,7 +461,7 @@
                         { key: 'contact', name: 'Contact', icon: 'fas fa-envelope' }
                     ],
                     profile: {
-                        name: 'Jazpen Madriaga',
+                        name: 'My Name',
                         title: 'Junior Software Engineer',
                         objective: 'I am software engineer with 2 years of experience in web development with a mind always seeking for new challenges to further enhance my skills and contribute to building high-quality, impactful solutions.'
                     },
