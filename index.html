@@ -3,11 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <title>Jazpen Madriaga - Junior Software Engineer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Config -->
     <script>
-        window.location.href = "https://jazpens-portfolio-d55f15.ingress-earth.ewp.live";
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800 min-h-screen">
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold text-white">{{ profile.name }}</h1>
+                        <span class="ml-3 text-sm text-purple-300">{{ profile.title }}</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="flex items-baseline space-x-4">
+                            <button 
+                                v-for="tab in tabs" 
+                                :key="tab.key"
+                                @click="activeTab = tab.key"
+                                :class="activeTab === tab.key ? 'bg-purple-600/50 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white'"
+                                class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2"
+                            >
+                                <i :class="tab.icon"></i>
+                                <span>{{ tab.name }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Mobile menu -->
+                <div v-show="mobileMenuOpen" class="md:hidden pb-4">
+                    <div class="flex flex-col space-y-2">
+                        <button 
+                            v-for="tab in tabs" 
+                            :key="tab.key"
+                            @click="activeTab = tab.key; mobileMenuOpen = false"
+                            :class="activeTab === tab.key ? 'bg-purple-600/50 text-white' : 'text-gray-300'"
+                            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-left"
+                        >
+                            <i :class="tab.icon"></i>
+                            <span>{{ tab.name }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            
+            <!-- Home/About Section -->
+            <div v-if="activeTab === 'about'" class="animate-fade-in">
+                <div class="text-center py-12 px-4">
+                    <div class="mb-8">
+                        <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse-slow">
+                            <i class="fas fa-user text-4xl text-white"></i>
+                        </div>
+                        <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 animate-slide-up">
+                            {{ profile.name }}
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl text-purple-300 mb-6 animate-slide-up">
+                            {{ profile.title }}
+                        </h2>
+                    </div>
+                    
+                    <!-- Objective -->
+                    <div class="max-w-4xl mx-auto mb-12">
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-up">
+                            <h3 class="text-2xl font-bold text-white mb-4 flex items-center justify-center">
+                                <i class="fas fa-bullseye mr-3 text-purple-400"></i>
+                                Professional Objective
+                            </h3>
+                            <p class="text-lg text-gray-300 leading-relaxed">
+                                {{ profile.objective }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 animate-slide-in-left">
+                            <i class="fas fa-calendar-alt text-3xl text-purple-400 mb-3"></i>
+                            <div class="text-2xl font-bold text-white">2+</div>
+                            <div class="text-gray-300">Years Experience</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 animate-slide-up">
+                            <i class="fas fa-code text-3xl text-green-400 mb-3"></i>
+                            <div class="text-2xl font-bold text-white">{{ skills.length }}</div>
+                            <div class="text-gray-300">Technologies</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 animate-slide-in-right">
+                            <i class="fas fa-project-diagram text-3xl text-blue-400 mb-3"></i>
+                            <div class="text-2xl font-bold text-white">{{ projects.length }}</div>
+                            <div class="text-gray-300">Projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div v-if="activeTab === 'skills'" class="animate-fade-in px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">Technical Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="(skill, index) in skills" :key="index"
+                         class="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-slide-up"
+                         :style="{ animationDelay: index * 0.1 + 's' }">
+                        <div class="flex items-center mb-4">
+                            <i :class="skill.icon" class="text-2xl mr-3" :style="{ color: skill.color }"></i>
+                            <h3 class="text-xl font-bold text-white">{{ skill.category }}</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <div v-for="tech in skill.technologies" :key="tech" 
+                                 class="bg-white/20 rounded-lg px-3 py-2 text-sm text-gray-300">
+                                {{ tech }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <div v-if="activeTab === 'experience'" class="animate-fade-in px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">Professional Experience</h2>
+                
+                <!-- Work Experience -->
+                <div class="max-w-4xl mx-auto mb-12">
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-up">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-purple-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-briefcase text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold text-white">{{ experience.position }}</h3>
+                                <h4 class="text-xl text-purple-300 mb-2">{{ experience.company }}</h4>
+                                <p class="text-gray-400 mb-4">{{ experience.period }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="max-w-4xl mx-auto">
+                    <h3 class="text-3xl font-bold text-white text-center mb-8">Education</h3>
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-up">
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-graduation-cap text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-white">{{ education.degree }}</h4>
+                                <p class="text-purple-300 mb-2">{{ education.university }}</p>
+                                <p class="text-gray-400">{{ education.year }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div v-if="activeTab === 'projects'" class="animate-fade-in px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">Projects</h2>
+                <div class="space-y-8">
+                    <div v-for="(project, index) in projects" :key="index"
+                         class="max-w-5xl mx-auto bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 animate-slide-up"
+                         :style="{ animationDelay: index * 0.2 + 's' }">
+                        <div class="flex items-start mb-6">
+                            <div :class="project.iconBg" class="rounded-full p-3 mr-4">
+                                <i :class="project.icon" class="text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold text-white mb-3">{{ project.name }}</h3>
+                                <p class="text-gray-300 mb-4 leading-relaxed">{{ project.description }}</p>
+                                
+                                <!-- Tech Stack -->
+                                <div class="mb-4">
+                                    <h4 class="text-lg font-semibold text-purple-300 mb-2">Technologies Used:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span v-for="tech in project.technologies" :key="tech"
+                                              class="bg-purple-600/30 text-purple-200 px-3 py-1 rounded-full text-sm border border-purple-500/30">
+                                            {{ tech }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div v-if="activeTab === 'contact'" class="animate-fade-in px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">Get In Touch</h2>
+                <div class="max-w-4xl mx-auto">
+                    
+                    <!-- Contact Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-in-left">
+                            <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                                <i class="fas fa-envelope mr-3 text-purple-400"></i>
+                                Let's Connect
+                            </h3>
+                            <p class="text-gray-300 mb-6">
+                                I'm always interested in hearing about new opportunities and challenges. 
+                                Feel free to reach out if you'd like to discuss potential collaborations or just say hello!
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-map-marker-alt w-5 mr-3 text-purple-400"></i>
+                                    <span>Available for Remote/Hybrid Work</span>
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-clock w-5 mr-3 text-purple-400"></i>
+                                    <span>Response within 24 hours</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- References -->
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-in-right">
+                            <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                                <i class="fas fa-user-friends mr-3 text-blue-400"></i>
+                                References
+                            </h3>
+                            <div class="space-y-4">
+                                <div v-for="reference in references" :key="reference.name"
+                                     class="bg-white/20 rounded-lg p-4">
+                                    <h4 class="font-bold text-white">{{ reference.name }}</h4>
+                                    <p class="text-purple-300 text-sm">{{ reference.position }}</p>
+                                    <p class="text-gray-400 text-sm">{{ reference.company }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form Placeholder -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20 animate-slide-up">
+                        <h3 class="text-2xl font-bold text-white mb-6 text-center">Send a Message</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-300 text-sm font-bold mb-2">Name</label>
+                                <input v-model="contactForm.name" type="text" 
+                                       class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-200"
+                                       placeholder="Your Name">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 text-sm font-bold mb-2">Email</label>
+                                <input v-model="contactForm.email" type="email" 
+                                       class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-200"
+                                       placeholder="your.email@example.com">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Message</label>
+                            <textarea v-model="contactForm.message" rows="5"
+                                      class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-200"
+                                      placeholder="Your message here..."></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button @click="sendMessage"
+                                    class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full transform hover:scale-105 transition-all duration-200 shadow-lg">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white/5 border-t border-white/10 mt-20">
+            <div class="max-w-7xl mx-auto py-8 px-4 text-center">
+                <p class="text-gray-300 mb-4">
+                    © 2024 {{ profile.name }}. Built with Vue 3 & Tailwind CSS
+                </p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors duration-200">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    activeTab: 'about',
+                    mobileMenuOpen: false,
+                    tabs: [
+                        { key: 'about', name: 'About', icon: 'fas fa-user' },
+                        { key: 'skills', name: 'Skills', icon: 'fas fa-code' },
+                        { key: 'experience', name: 'Experience', icon: 'fas fa-briefcase' },
+                        { key: 'projects', name: 'Projects', icon: 'fas fa-project-diagram' },
+                        { key: 'contact', name: 'Contact', icon: 'fas fa-envelope' }
+                    ],
+                    profile: {
+                        name: 'Jazpen Madriaga',
+                        title: 'Junior Software Engineer',
+                        objective: 'I am software engineer with 2 years of experience in web development with a mind always seeking for new challenges to further enhance my skills and contribute to building high-quality, impactful solutions.'
+                    },
+                    skills: [
+                        {
+                            category: 'Frontend',
+                            icon: 'fab fa-js-square',
+                            color: '#f7df1e',
+                            technologies: ['JavaScript/TypeScript', 'Vue.js', 'React']
+                        },
+                        {
+                            category: 'Backend',
+                            icon: 'fas fa-server',
+                            color: '#4fc08d',
+                            technologies: ['Node.js', 'Python (Django, Flask)', 'PHP (Laravel)']
+                        },
+                        {
+                            category: 'Mobile',
+                            icon: 'fas fa-mobile-alt',
+                            color: '#02569b',
+                            technologies: ['Flutter', 'Android Development']
+                        },
+                        {
+                            category: 'Database',
+                            icon: 'fas fa-database',
+                            color: '#336791',
+                            technologies: ['MySQL', 'DynamoDB', 'Redis']
+                        },
+                        {
+                            category: 'Cloud & DevOps',
+                            icon: 'fab fa-aws',
+                            color: '#ff9900',
+                            technologies: ['AWS Lambda', 'API Gateway', 'S3', 'CI/CD Pipelines']
+                        }
+                    ],
+                    experience: {
+                        position: 'Junior Software Engineer',
+                        company: 'EasyPOS Solutions Inc',
+                        period: '2022 - Present'
+                    },
+                    education: {
+                        degree: 'Bachelor of Science in Computer Engineering',
+                        university: 'President Ramon Magsaysay State University',
+                        year: '2022'
+                    },
+                    projects: [
+                        {
+                            name: 'The STUDIO Project',
+                            icon: 'fas fa-utensils',
+                            iconBg: 'bg-orange-600',
+                            description: 'A web application that dynamically deploys menus to different Food delivery apps like UberEats, Menulog and DoorDash. This also deploys the menu to Online Ordering System, POS and mobile apps.',
+                            technologies: ['Python', 'AWS Lambda', 'React', 'Node.js', 'MySQL', 'DynamoDB', 'Redis', 'CI/CD']
+                        },
+                        {
+                            name: 'Network Doctor',
+                            icon: 'fas fa-network-wired',
+                            iconBg: 'bg-blue-600',
+                            description: 'A web application that allows users to keep track of their network utilization, packet loss and latency. This makes recommendations to users on how to improve their network utilization.',
+                            technologies: ['Web Development', 'Network Monitoring', 'Real-time Analytics']
+                        },
+                        {
+                            name: 'Chicken-Eat',
+                            icon: 'fas fa-brain',
+                            iconBg: 'bg-green-600',
+                            description: 'A Flutter application that uses AI to advise if chicken meat is safe to eat or not. This also provides recommendations and suggestions on how the chicken should be handled.',
+                            technologies: ['Flutter', 'AI/ML', 'Image Processing', 'Mobile Development']
+                        }
+                    ],
+                    references: [
+                        {
+                            name: 'Mykel Andrew Flores',
+                            position: 'Senior Software Engineer',
+                            company: 'EasyPOS'
+                        }
+                    ],
+                    contactForm: {
+                        name: '',
+                        email: '',
+                        message: ''
+                    }
+                }
+            },
+            methods: {
+                sendMessage() {
+                    if (this.contactForm.name && this.contactForm.email && this.contactForm.message) {
+                        alert('Thank you for your message! I\'ll get back to you soon. (Note: This is a demo form)')
+                        this.contactForm = { name: '', email: '', message: '' }
+                    } else {
+                        alert('Please fill in all fields.')
+                    }
+                }
+            }
+        }).mount('#app')
     </script>
 </body>
 </html>
